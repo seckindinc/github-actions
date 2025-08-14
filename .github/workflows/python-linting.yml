@@ -1,0 +1,29 @@
+name: Python Linting Check
+description: This workflow checks Python code for linting errors and formatting issues.
+
+on: # trigger section
+  pull_request:
+    branches: [ main ]
+
+jobs: # jobs section
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps: # steps section
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install linting tools
+      run: |
+        pip install flake8 black
+    
+    - name: Run Python linter
+      run: flake8 . --max-line-length=88
+    
+    - name: Check code formatting
+      run: black --check .
