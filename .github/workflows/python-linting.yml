@@ -1,5 +1,4 @@
 name: Python Linting Check
-description: This workflow checks Python code for linting errors and formatting issues.
 
 on: # trigger section
   pull_request:
