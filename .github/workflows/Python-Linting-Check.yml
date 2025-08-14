@@ -1,15 +1,26 @@
-name: Python Linting Check
+name: Python Linting Auto-Fix
 
 on:
-  pull_request:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Python Linting Check"]  # Runs after check workflow
+    types:
+      - completed
 
 jobs:
-  lint:
+  auto-fix:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Needed to push changes
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository }}
+        ref: ${{ github.event.workflow_run.head_branch }}
+        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -19,5 +30,15 @@ jobs:
     - name: Install black
       run: pip install black
 
-    - name: Check formatting
-      run: black --check .
+    - name: Run Black formatter
+      run: black .
+
+    - name: Commit changes if needed
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config --global user.name "Seckindinc"
+          git config --global user.email "seckindinc@gmail.com"
+          git add .
+          git commit -m "chore: auto-format Python code with Black"
+          git push origin HEAD:${{ github.event.workflow_run.head_branch }}
+        fi
