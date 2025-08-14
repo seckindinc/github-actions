@@ -6,7 +6,6 @@ on:
 
 jobs:
   auto-fix:
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -16,8 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        repository: ${{ github.repository }}
-        ref: ${{ github.event.workflow_run.head_branch }}
+        ref: ${{ github.head_ref }}
         fetch-depth: 0
 
     - name: Set up Python
@@ -38,5 +36,5 @@ jobs:
           git config --global user.email "seckindinc@gmail.com"
           git add .
           git commit -m "chore: auto-format Python code with Black"
-          git push origin HEAD:${{ github.event.workflow_run.head_branch }}
+          git push origin HEAD:${{ github.head_ref }}
         fi
