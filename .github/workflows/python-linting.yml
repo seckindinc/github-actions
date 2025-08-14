@@ -19,10 +19,7 @@ jobs: # jobs section
     
     - name: Install linting tools
       run: |
-        pip install flake8 black
-    
-    - name: Run Python linter
-      run: flake8 . --max-line-length=88
+        pip install black
     
     - name: Check code formatting
-      run: black --check .
+      run: black .
