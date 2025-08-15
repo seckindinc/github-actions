@@ -1,0 +1,28 @@
+name: 'Python Code Quality Check'
+description: 'Run Python linting with Black formatter'
+
+inputs:
+  python-version:
+    description: 'Python version to use'
+    required: false
+    default: '3.9'
+  source-path:
+    description: 'Path to Python source code'
+    required: false
+    default: '.'
+
+runs:
+  using: 'composite' # Composite Action
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+        
+    - name: Install Black
+      shell: bash
+      run: pip install black
+        
+    - name: Run Black formatting check
+      shell: bash
+      run: black --check --diff ${{ inputs.source-path }}

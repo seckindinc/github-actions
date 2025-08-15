@@ -1,0 +1,12 @@
+name: Python Code Quality
+on: [push, pull_request]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: your-org/python-linting-action@v1
+        with:
+          python-version: '3.11'
+          source-path: 'src/'
