@@ -1,0 +1,12 @@
+# .github/workflows/pr-lint-call.yml
+name: PR Lint Check (Same Repo)
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  run-lint:
+    uses: ./.github/workflows/python-lint-reusable.yml
+    with:
+      python-version: '3.11'

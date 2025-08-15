@@ -1,0 +1,12 @@
+# .github/workflows/pr-lint-external.yml
+name: PR Lint Check (External Repo)
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  run-lint:
+    uses: org/reusable-workflows-repo/.github/workflows/python-lint-reusable.yml@main
+    with:
+      python-version: '3.10'

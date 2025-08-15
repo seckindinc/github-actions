@@ -1,0 +1,21 @@
+# .github/workflows/python-lint-reusable.yml
+name: Python Linting Workflow
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: false
+        type: string
+        default: '3.9'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python-version }}
+      - run: pip install black
+      - run: black --check .
