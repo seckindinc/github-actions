@@ -1,5 +1,4 @@
 name: Complete CI/CD Pipeline
-
 on:
   push:
     branches: [main]  # Trigger the complete CI/CD pipeline on main branch pushes
@@ -13,15 +12,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-
     - name: Install black
       run: pip install black
-
     - name: Check formatting
       run: black --check sample-CD.py
 
@@ -35,11 +31,10 @@ jobs:
     steps:
     - name: Checkout validated code
       uses: actions/checkout@v4
-
     - name: Execute development deployment
-      run: |
-        ENVIRONMENT=${{ vars.ENVIRONMENT }}
-        python sample-CD.py
+      run: python sample-CD.py
+      env:
+        ENVIRONMENT: ${{ vars.ENVIRONMENT }}
 
   # CONTINUOUS DEPLOYMENT STAGE 2: Test Environment
   deploy-test:
@@ -51,14 +46,23 @@ jobs:
     steps:
     - name: Checkout validated code
       uses: actions/checkout@v4
-
     - name: Execute test deployment
+      run: python sample-CD.py
+      env:
+        ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+
+  # SUMMARY JOB: Generate deployment summary
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [continuous-integration, deploy-development, deploy-test]
+    if: always()  # Run regardless of previous job outcomes
+    
+    steps:
+    - name: Generate summary
       run: |
-        ENVIRONMENT=${{ vars.ENVIRONMENT }}
-        python sample-CD.pyresult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
+        if [[ "${{ needs.continuous-integration.result }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
           echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
         else
-        echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
         fi
