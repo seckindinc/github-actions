@@ -152,31 +152,9 @@ The workflows in this repository use various GitHub Actions:
 - `actions/setup-node@v4`: Node.js environment setup
 - `github/super-linter@v4`: Multi-language linting
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Contribution Guidelines
-- Follow existing workflow naming conventions
-- Include documentation for new workflows
-- Test workflows before submitting
-- Update README for new features
-
 ## 📄 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-1. Check existing workflows for similar implementations
-2. Review the GitHub Actions documentation
-3. Open an issue with detailed description
-4. Provide workflow logs if applicable
 
 ## 📚 Additional Resources
 
