@@ -68,46 +68,14 @@ jobs:
     - name: Generate pipeline summary
       run: |
         echo "## CI/CD Pipeline Execution Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Pipeline Trigger:** Push to main branch" >> $GITHUB_STEP_SUMMARY
         echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Stage Results:" >> $GITHUB_STEP_SUMMARY
-        
-        # Check CI status
-        if [[ "${{ needs.continuous-integration.result }}" == "success" ]]; then
-          echo "- Continuous Integration: Code quality validation passed" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "- Continuous Integration: Code quality validation failed" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        # Check Development Deployment status  
-        if [[ "${{ needs.deploy-development.result }}" == "success" ]]; then
-          echo "- Development Deployment: Successfully deployed" >> $GITHUB_STEP_SUMMARY
-        elif [[ "${{ needs.deploy-development.result }}" == "skipped" ]]; then
-          echo "- Development Deployment: Skipped due to CI failure" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "- Development Deployment: Deployment failed" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        # Check Test Deployment status
-        if [[ "${{ needs.deploy-test.result }}" == "success" ]]; then
-          echo "- Test Deployment: Successfully deployed with approval" >> $GITHUB_STEP_SUMMARY
-        elif [[ "${{ needs.deploy-test.result }}" == "skipped" ]]; then
-          echo "- Test Deployment: Skipped due to previous stage failure" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "- Test Deployment: Deployment failed" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        # Determine next steps based on overall success
-        if [[ "${{ needs.continuous-integration.result }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
+        echo "**CI Status:** ${{ needs.continuous-integration.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Dev Deployment:** ${{ needs.deploy-development.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Test Deployment:** ${{ needs.deploy-test.result }}" >> $GITHUB_STEP_SUMMARYresult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
           echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
         else
-          echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
-        firesult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
-          echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
+        echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
         else
-          echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
         fi
