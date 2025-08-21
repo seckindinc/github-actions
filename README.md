@@ -90,13 +90,7 @@ The repository includes a custom action defined in `action.yml` that can be used
 - Output generation
 - Reusability patterns
 
-### Usage Example
-```yaml
-- name: Use Custom Action
-  uses: seckindinc/github-actions@main
-  with:
-    # Add your input parameters here
-```
+
 
 ## 🔄 Reusable Workflows
 
@@ -109,24 +103,10 @@ A base linting workflow that can be called from other workflows or repositories.
 - Customizable failure conditions
 
 ### Cross-Repository Linter (`Reusable-Linter-Caller-DifferentRepo.yml`)
-Demonstrates how to use reusable workflows from different repositories:
-```yaml
-jobs:
-  call-linter:
-    uses: seckindinc/github-actions/.github/workflows/Reusable-Linter.yml@main
-    with:
-      # Workflow inputs
-```
+Demonstrates how to use reusable workflows from different repositories.
 
 ### Same-Repository Linter (`Reusable-Linter-Caller-SameRepo.yml`)
-Example of calling reusable workflows within the same repository:
-```yaml
-jobs:
-  call-linter:
-    uses: ./.github/workflows/Reusable-Linter.yml
-    with:
-      # Workflow inputs
-```
+Example of calling reusable workflows within the same repository.
 
 ## 🎯 Code Quality & Linting
 
@@ -146,34 +126,7 @@ The `linting/` directory contains sample files for testing linting workflows:
 
 ## 🚀 Getting Started
 
-### 1. Using Workflows in Your Repository
-
-Copy any workflow from `.github/workflows/` to your repository's `.github/workflows/` directory.
-
-### 2. Using the Custom Action
-
-Reference this repository's custom action in your workflows:
-
-```yaml
-steps:
-  - name: Use GitHub Actions Collection
-    uses: seckindinc/github-actions@main
-    with:
-      # Add required inputs
-```
-
-### 3. Using Reusable Workflows
-
-Call reusable workflows from this repository:
-
-```yaml
-jobs:
-  lint:
-    uses: seckindinc/github-actions/.github/workflows/Reusable-Linter.yml@main
-    with:
-      language: python
-      strict: true
-```
+Reference workflows from this repository in your projects or use the custom action and reusable workflows as needed.
 
 ## 🔧 Customization
 
@@ -199,9 +152,31 @@ The workflows in this repository use various GitHub Actions:
 - `actions/setup-node@v4`: Node.js environment setup
 - `github/super-linter@v4`: Multi-language linting
 
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Contribution Guidelines
+- Follow existing workflow naming conventions
+- Include documentation for new workflows
+- Test workflows before submitting
+- Update README for new features
+
 ## 📄 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+If you encounter any issues or have questions:
+1. Check existing workflows for similar implementations
+2. Review the GitHub Actions documentation
+3. Open an issue with detailed description
+4. Provide workflow logs if applicable
 
 ## 📚 Additional Resources
 
