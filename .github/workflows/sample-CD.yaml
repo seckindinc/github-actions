@@ -9,7 +9,7 @@ jobs:
   deploy-dev:
     name: Deploy to Development
     runs-on: ubuntu-latest
-    environment: dev  # This connects to the 'dev' environment 
+    environment: dev  # This connects to the 'dev' environment
     
     steps:
     - name: Checkout code
@@ -21,7 +21,7 @@ jobs:
         echo "Starting deployment to Development environment..."
         # This is where actual deployment happens - running our application
         python sample-CD.py
-        echo "Development deployment completed successfully!"
+        echo "Development deployment completed successfully"
 
   # DEPLOYMENT STAGE 2: Test Environment (depends on dev success)
   deploy-test:
