@@ -55,22 +55,7 @@ jobs:
     - name: Execute test deployment
       run: |
         export ENVIRONMENT="${{ vars.ENVIRONMENT }}"
-        python sample-CD.py
-
-  # PIPELINE SUMMARY
-  pipeline-summary:
-    name: Pipeline Completion Summary  
-    runs-on: ubuntu-latest
-    needs: [continuous-integration, deploy-development, deploy-test]
-    if: always()
-    
-    steps:
-    - name: Generate pipeline summary
-      run: |
-        echo "CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
-        echo "CI Status: ${{ needs.continuous-integration.result }}" >> $GITHUB_STEP_SUMMARY
-        echo "Dev Status: ${{ needs.deploy-development.result }}" >> $GITHUB_STEP_SUMMARY
-        echo "Test Status: ${{ needs.deploy-test.result }}" >> $GITHUB_STEP_SUMMARYresult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
+        python sample-CD.pyresult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
           echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
         else
         echo "**Next Steps:** Review failed stages and address issues before retry" >> $GITHUB_STEP_SUMMARY
