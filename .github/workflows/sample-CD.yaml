@@ -1,0 +1,43 @@
+name: Sample CD Pipeline
+
+on:
+  push:
+    branches: [main]  # Trigger deployment when code is pushed to main branch
+
+jobs:
+  # DEPLOYMENT STAGE 1: Development Environment
+  deploy-dev:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    environment: dev  # This connects to the 'dev' environment 
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Dev Environment
+      run: |
+        export ENVIRONMENT="${{ vars.ENVIRONMENT }}"
+        echo "Starting deployment to Development environment..."
+        # This is where actual deployment happens - running our application
+        python sample-CD.py
+        echo "Development deployment completed successfully!"
+
+  # DEPLOYMENT STAGE 2: Test Environment (depends on dev success)
+  deploy-test:
+    name: Deploy to Test
+    runs-on: ubuntu-latest
+    needs: deploy-dev  # This ensures test deployment only runs after dev succeeds
+    environment: test  # This connects to the 'test' environment with approval required
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Test Environment
+      run: |
+        export ENVIRONMENT="${{ vars.ENVIRONMENT }}"
+        echo "Starting deployment to Test environment..."
+        # This is where actual deployment happens - running our application  
+        python sample-CD.py
+        echo "Test deployment completed successfully"
