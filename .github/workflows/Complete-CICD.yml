@@ -38,7 +38,7 @@ jobs:
 
     - name: Execute development deployment
       run: |
-        export ENVIRONMENT="${{ vars.ENVIRONMENT }}"
+        ENVIRONMENT=${{ vars.ENVIRONMENT }}
         python sample-CD.py
 
   # CONTINUOUS DEPLOYMENT STAGE 2: Test Environment
@@ -54,7 +54,7 @@ jobs:
 
     - name: Execute test deployment
       run: |
-        export ENVIRONMENT="${{ vars.ENVIRONMENT }}"
+        ENVIRONMENT=${{ vars.ENVIRONMENT }}
         python sample-CD.pyresult }}" == "success" && "${{ needs.deploy-development.result }}" == "success" && "${{ needs.deploy-test.result }}" == "success" ]]; then
           echo "**Next Steps:** Code is ready for production deployment consideration" >> $GITHUB_STEP_SUMMARY
         else
